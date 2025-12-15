@@ -7,17 +7,23 @@ import { CodeExplainer } from '@/components/CodeExplainer';
 import { BugFixer } from '@/components/BugFixer';
 import { CodeGenerator } from '@/components/CodeGenerator';
 import { ChatInterface } from '@/components/ChatInterface';
+import { HistoryPanel } from '@/components/HistoryPanel';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { extractCodeFromImage } from '@/lib/ocr';
 import { analyzeCode, explainCode, fixBugs, generateCode, chatWithAI } from '@/lib/ai-service';
+import { useHistory } from '@/hooks/useHistory';
+import { useAuth } from '@/hooks/useAuth';
+import { Json } from '@/integrations/supabase/types';
 
-type ActiveSection = 'home' | 'features' | 'image' | 'analyze' | 'explain' | 'bugs' | 'generate' | 'chat';
+type ActiveSection = 'home' | 'features' | 'image' | 'analyze' | 'explain' | 'bugs' | 'generate' | 'chat' | 'history';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<ActiveSection>('home');
   const contentRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
+  const { saveAnalysis, createConversation, saveMessage } = useHistory();
 
   const handleNavigate = (section: string) => {
     setActiveSection(section as ActiveSection);
@@ -45,37 +51,78 @@ const Index = () => {
     }, 100);
   };
 
+  // Wrapped functions that also save to history
+  const handleAnalyze = async (code: string) => {
+    const result = await analyzeCode(code);
+    if (user) {
+      await saveAnalysis(code, 'analyze', result.language, result as unknown as Json);
+    }
+    return result;
+  };
+
+  const handleExplain = async (code: string, level: 'beginner' | 'advanced') => {
+    const result = await explainCode(code, level);
+    if (user) {
+      await saveAnalysis(code, 'explain', null, result as unknown as Json);
+    }
+    return result;
+  };
+
+  const handleFix = async (code: string) => {
+    const result = await fixBugs(code);
+    if (user) {
+      await saveAnalysis(code, 'fix', result.language, result as unknown as Json);
+    }
+    return result;
+  };
+
+  const handleGenerate = async (prompt: string, language: string) => {
+    const result = await generateCode(prompt, language);
+    if (user) {
+      await saveAnalysis(prompt, 'generate', language, { code: result } as unknown as Json);
+    }
+    return result;
+  };
+
+  const handleChat = async (message: string) => {
+    const response = await chatWithAI(message);
+    // Chat history is handled differently via conversations
+    return response;
+  };
+
   const renderContent = () => {
     switch (activeSection) {
       case 'analyze':
         return (
           <CodeAnalyzer
-            onAnalyze={analyzeCode}
+            onAnalyze={handleAnalyze}
             onExtractCode={extractCodeFromImage}
           />
         );
       case 'explain':
         return (
           <CodeExplainer
-            onExplain={explainCode}
+            onExplain={handleExplain}
             onExtractCode={extractCodeFromImage}
           />
         );
       case 'bugs':
         return (
           <BugFixer
-            onFix={fixBugs}
+            onFix={handleFix}
             onExtractCode={extractCodeFromImage}
           />
         );
       case 'generate':
-        return <CodeGenerator onGenerate={generateCode} />;
+        return <CodeGenerator onGenerate={handleGenerate} />;
       case 'chat':
         return (
           <Card variant="glass" className="overflow-hidden">
-            <ChatInterface onSendMessage={chatWithAI} />
+            <ChatInterface onSendMessage={handleChat} />
           </Card>
         );
+      case 'history':
+        return <HistoryPanel />;
       default:
         return null;
     }
