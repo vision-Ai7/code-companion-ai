@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { HeroSection } from '@/components/HeroSection';
 import { FeatureGrid } from '@/components/FeatureGrid';
 import { CodeAnalyzer } from '@/components/CodeAnalyzer';
@@ -171,13 +172,7 @@ const Index = () => {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-border py-8 px-4">
-        <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>VisionCode AI — AI-Powered Code Intelligence</p>
-          <p className="mt-1">Supporting 30+ programming languages</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
