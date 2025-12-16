@@ -1,4 +1,5 @@
-import { Code2, Menu, X, User, LogOut, History } from 'lucide-react';
+import { Menu, X, User, LogOut, History } from 'lucide-react';
+import visioncodeLogo from '@/assets/visioncode-logo.png';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -43,9 +44,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => onNavigate?.('home')}
           >
-            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30">
-              <Code2 className="h-5 w-5 text-primary" />
-            </div>
+            <img src={visioncodeLogo} alt="VisionCode AI Logo" className="w-10 h-10 object-contain" />
             <div>
               <h1 className="font-bold text-lg leading-tight">VisionCode</h1>
               <span className="text-xs text-primary font-medium">AI</span>
