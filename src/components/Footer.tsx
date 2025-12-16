@@ -58,8 +58,13 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@visioncode.ai" className="text-muted-foreground hover:text-foreground transition-colors">
-                  support@visioncode.ai
+                <Link to="/support" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Support
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:visioncode.help@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors">
+                  visioncode.help@gmail.com
                 </a>
               </li>
             </ul>
