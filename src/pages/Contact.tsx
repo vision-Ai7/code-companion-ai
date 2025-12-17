@@ -11,9 +11,9 @@ const Contact = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header onNavigate={(section) => section === 'home' && navigate('/')} />
       
-      <main className="container mx-auto px-4 pt-24 pb-16 max-w-4xl flex-1">
-        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-        <p className="text-muted-foreground mb-8 text-lg">
+      <main className="container mx-auto px-4 pt-20 sm:pt-24 pb-12 sm:pb-16 max-w-4xl flex-1">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Contact Us</h1>
+        <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">
           We&apos;d love to hear from you. Get in touch with the VisionCode AI team.
         </p>
         

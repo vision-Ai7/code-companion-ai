@@ -18,42 +18,42 @@ interface AnalysisResultProps {
 
 export const AnalysisResult = ({ result }: AnalysisResultProps) => {
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Language Badge */}
       <div className="flex items-center gap-2">
-        <div className="px-3 py-1.5 rounded-lg bg-primary/20 text-primary font-mono text-sm border border-primary/30">
+        <div className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-primary/20 text-primary font-mono text-xs sm:text-sm border border-primary/30">
           {result.language}
         </div>
-        <span className="text-sm text-muted-foreground">detected</span>
+        <span className="text-xs sm:text-sm text-muted-foreground">detected</span>
       </div>
 
       {/* Description */}
       <Card variant="glass">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Code2 className="h-5 w-5 text-primary" />
+        <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+            <Code2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             What this code does
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground leading-relaxed">{result.description}</p>
+        <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{result.description}</p>
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {/* Strengths */}
         <Card variant="glass" className="border-success/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2 text-success">
-              <CheckCircle2 className="h-5 w-5" />
+          <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-success">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
               Strengths
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+            <ul className="space-y-1.5 sm:space-y-2">
               {result.strengths.map((strength, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
+                <li key={i} className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                  <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-success mt-0.5 shrink-0" />
                   <span className="text-muted-foreground">{strength}</span>
                 </li>
               ))}
@@ -63,24 +63,24 @@ export const AnalysisResult = ({ result }: AnalysisResultProps) => {
 
         {/* Problems */}
         <Card variant="glass" className="border-destructive/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2 text-destructive">
-              <XCircle className="h-5 w-5" />
+          <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-destructive">
+              <XCircle className="h-4 w-4 sm:h-5 sm:w-5" />
               Problems
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+            <ul className="space-y-1.5 sm:space-y-2">
               {result.problems.length > 0 ? (
                 result.problems.map((problem, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm">
-                    <XCircle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+                  <li key={i} className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                    <XCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-destructive mt-0.5 shrink-0" />
                     <span className="text-muted-foreground">{problem}</span>
                   </li>
                 ))
               ) : (
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
+                <li className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                  <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-success mt-0.5 shrink-0" />
                   <span className="text-muted-foreground">No major problems detected!</span>
                 </li>
               )}
@@ -92,17 +92,17 @@ export const AnalysisResult = ({ result }: AnalysisResultProps) => {
       {/* Security Issues */}
       {result.securityIssues && result.securityIssues.length > 0 && (
         <Card variant="glass" className="border-warning/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2 text-warning">
-              <Shield className="h-5 w-5" />
+          <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-warning">
+              <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
               Security Concerns
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+            <ul className="space-y-1.5 sm:space-y-2">
               {result.securityIssues.map((issue, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                  <AlertTriangle className="h-4 w-4 text-warning mt-0.5 shrink-0" />
+                <li key={i} className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                  <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-warning mt-0.5 shrink-0" />
                   <span className="text-muted-foreground">{issue}</span>
                 </li>
               ))}
@@ -113,17 +113,17 @@ export const AnalysisResult = ({ result }: AnalysisResultProps) => {
 
       {/* Suggestions */}
       <Card variant="glass" className="border-accent/30">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2 text-accent">
-            <Lightbulb className="h-5 w-5" />
+        <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-accent">
+            <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5" />
             Suggestions
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <ul className="space-y-2">
+        <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+          <ul className="space-y-1.5 sm:space-y-2">
             {result.suggestions.map((suggestion, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm">
-                <Lightbulb className="h-4 w-4 text-accent mt-0.5 shrink-0" />
+              <li key={i} className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                <Lightbulb className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-accent mt-0.5 shrink-0" />
                 <span className="text-muted-foreground">{suggestion}</span>
               </li>
             ))}
@@ -134,13 +134,13 @@ export const AnalysisResult = ({ result }: AnalysisResultProps) => {
       {/* Clean Code */}
       {result.cleanCode && (
         <Card variant="glass">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Zap className="h-5 w-5 text-primary" />
+          <CardHeader className="pb-2 sm:pb-3 p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
               Optimized Code
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
             <CodeBlock
               code={result.cleanCode}
               language={result.language.toLowerCase()}

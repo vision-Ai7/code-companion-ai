@@ -125,56 +125,56 @@ export const ChatInterface = ({ onSendMessage, isLoading }: ChatInterfaceProps) 
   };
 
   return (
-    <div className="flex flex-col h-[600px]">
+    <div className="flex flex-col h-[500px] sm:h-[600px]">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto space-y-4 p-4 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 p-3 sm:p-4 scrollbar-thin">
         {messages.map((message) => (
           <div
             key={message.id}
             className={cn(
-              "flex gap-3 animate-fade-in",
+              "flex gap-2 sm:gap-3 animate-fade-in",
               message.role === 'user' && "flex-row-reverse"
             )}
           >
             <div
               className={cn(
-                "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center",
+                "shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center",
                 message.role === 'assistant'
                   ? "bg-primary/20 text-primary"
                   : "bg-accent/20 text-accent"
               )}
             >
               {message.role === 'assistant' ? (
-                <Bot className="h-4 w-4" />
+                <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               ) : (
-                <User className="h-4 w-4" />
+                <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               )}
             </div>
             <Card
               variant="glass"
               className={cn(
-                "max-w-[80%] p-4",
+                "max-w-[85%] sm:max-w-[80%] p-3 sm:p-4",
                 message.role === 'user' && "bg-primary/10 border-primary/30"
               )}
             >
-              <div className="text-sm leading-relaxed">
+              <div className="text-xs sm:text-sm leading-relaxed">
                 {renderMessageContent(message.content)}
               </div>
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2">
                 {message.timestamp.toLocaleTimeString()}
               </p>
             </Card>
           </div>
         ))}
         {sending && (
-          <div className="flex gap-3 animate-fade-in">
-            <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-primary/20 text-primary">
-              <Bot className="h-4 w-4" />
+          <div className="flex gap-2 sm:gap-3 animate-fade-in">
+            <div className="shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center bg-primary/20 text-primary">
+              <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </div>
-            <Card variant="glass" className="p-4">
+            <Card variant="glass" className="p-3 sm:p-4">
               <div className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                <span className="text-sm text-muted-foreground">Thinking...</span>
+                <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin text-primary" />
+                <span className="text-xs sm:text-sm text-muted-foreground">Thinking...</span>
               </div>
             </Card>
           </div>
@@ -183,14 +183,14 @@ export const ChatInterface = ({ onSendMessage, isLoading }: ChatInterfaceProps) 
       </div>
 
       {/* Input */}
-      <div className="border-t border-border p-4">
+      <div className="border-t border-border p-3 sm:p-4">
         <div className="flex gap-2">
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask me anything about code..."
-            className="min-h-[60px] resize-none"
+            className="min-h-[50px] sm:min-h-[60px] resize-none text-sm"
             disabled={sending}
           />
           <Button
@@ -202,7 +202,7 @@ export const ChatInterface = ({ onSendMessage, isLoading }: ChatInterfaceProps) 
             <Send className="h-4 w-4" />
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-2 text-center">
+        <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2 text-center">
           Press Enter to send, Shift+Enter for new line
         </p>
       </div>

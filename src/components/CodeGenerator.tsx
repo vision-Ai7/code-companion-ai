@@ -47,18 +47,18 @@ export const CodeGenerator = ({ onGenerate }: CodeGeneratorProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Card variant="glass">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileCode className="h-5 w-5 text-primary" />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <FileCode className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             Code Generator
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0 sm:pt-0">
           {/* Language Selection */}
           <div>
-            <label className="text-sm font-medium mb-2 block">
+            <label className="text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 block">
               Select Programming Language
             </label>
             <LanguageSelector value={language} onChange={setLanguage} />
@@ -66,27 +66,27 @@ export const CodeGenerator = ({ onGenerate }: CodeGeneratorProps) => {
 
           {/* Prompt Input */}
           <div>
-            <label className="text-sm font-medium mb-2 block">
+            <label className="text-xs sm:text-sm font-medium mb-1.5 sm:mb-2 block">
               Describe what you want to build
             </label>
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="E.g., Create a function that calculates the factorial of a number..."
-              className="min-h-[120px]"
+              className="min-h-[100px] sm:min-h-[120px] text-sm"
             />
           </div>
 
           {/* Suggestions */}
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Quick suggestions:</p>
-            <div className="flex flex-wrap gap-2">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-1.5 sm:mb-2">Quick suggestions:</p>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {promptSuggestions.map((suggestion, index) => (
                 <Button
                   key={index}
                   variant="outline"
                   size="sm"
-                  className="text-xs"
+                  className="text-[10px] sm:text-xs h-7 sm:h-8 px-2 sm:px-3"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
@@ -99,7 +99,7 @@ export const CodeGenerator = ({ onGenerate }: CodeGeneratorProps) => {
           <Button
             onClick={handleGenerate}
             disabled={!prompt.trim() || isLoading}
-            className="w-full gap-2"
+            className="w-full gap-2 text-sm sm:text-base"
             size="lg"
           >
             <Sparkles className="h-4 w-4" />
@@ -114,13 +114,13 @@ export const CodeGenerator = ({ onGenerate }: CodeGeneratorProps) => {
       {/* Generated Code */}
       {generatedCode && !isLoading && (
         <Card variant="glass" className="animate-fade-in">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
               Generated Code
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
             <CodeBlock
               code={generatedCode}
               language={language}

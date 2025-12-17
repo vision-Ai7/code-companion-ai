@@ -58,49 +58,49 @@ export const CodeAnalyzer = ({ onAnalyze, onExtractCode }: CodeAnalyzerProps) =>
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Card variant="glass">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Scan className="h-5 w-5 text-primary" />
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <Scan className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             Code Analyzer
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0 sm:pt-0">
           {/* Input Mode Tabs */}
           <Tabs value={inputMode} onValueChange={(v) => setInputMode(v as 'paste' | 'image')}>
-            <TabsList className="w-full">
-              <TabsTrigger value="paste" className="flex-1 gap-2">
-                <Code2 className="h-4 w-4" />
-                Paste Code
+            <TabsList className="w-full h-auto flex-wrap">
+              <TabsTrigger value="paste" className="flex-1 gap-1.5 sm:gap-2 text-xs sm:text-sm py-2">
+                <Code2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="hidden xs:inline">Paste</span> Code
               </TabsTrigger>
-              <TabsTrigger value="image" className="flex-1 gap-2">
-                <ImageIcon className="h-4 w-4" />
-                Upload Image
+              <TabsTrigger value="image" className="flex-1 gap-1.5 sm:gap-2 text-xs sm:text-sm py-2">
+                <ImageIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="hidden xs:inline">Upload</span> Image
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="paste" className="mt-4">
+            <TabsContent value="paste" className="mt-3 sm:mt-4">
               <Textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Paste your code here for analysis..."
-                className="min-h-[200px] font-mono"
+                className="min-h-[150px] sm:min-h-[200px] font-mono text-xs sm:text-sm"
               />
             </TabsContent>
 
-            <TabsContent value="image" className="mt-4">
+            <TabsContent value="image" className="mt-3 sm:mt-4">
               <ImageUpload
                 onImageSelect={handleImageSelect}
                 isProcessing={isExtracting}
               />
               {code && (
-                <div className="mt-4">
-                  <p className="text-sm text-muted-foreground mb-2">Extracted code:</p>
+                <div className="mt-3 sm:mt-4">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">Extracted code:</p>
                   <Textarea
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="min-h-[150px] font-mono"
+                    className="min-h-[120px] sm:min-h-[150px] font-mono text-xs sm:text-sm"
                   />
                 </div>
               )}
@@ -111,7 +111,7 @@ export const CodeAnalyzer = ({ onAnalyze, onExtractCode }: CodeAnalyzerProps) =>
           <Button
             onClick={handleAnalyze}
             disabled={!code.trim() || isLoading}
-            className="w-full gap-2"
+            className="w-full gap-2 text-sm sm:text-base"
             size="lg"
           >
             <Scan className="h-4 w-4" />
