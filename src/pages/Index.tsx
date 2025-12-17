@@ -130,7 +130,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Header onNavigate={handleNavigate} />
 
       {/* Hero Section - only show on home */}
@@ -140,13 +140,13 @@ const Index = () => {
 
       {/* Features Grid - show on home and features */}
       {(activeSection === 'home' || activeSection === 'features') && (
-        <section className="py-20 px-4" id="features">
+        <section className="py-12 sm:py-16 md:py-20 px-4" id="features">
           <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
                 Powerful <span className="text-gradient">AI Features</span>
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-2">
                 Everything you need to analyze, understand, debug, and generate code with AI assistance
               </p>
             </div>
@@ -157,14 +157,14 @@ const Index = () => {
 
       {/* Active Feature Content */}
       {!['home', 'features'].includes(activeSection) && (
-        <section ref={contentRef} className="pt-24 pb-20 px-4">
+        <section ref={contentRef} className="pt-20 sm:pt-24 pb-12 sm:pb-20 px-3 sm:px-4">
           <div className="container mx-auto max-w-4xl">
             <Button
               variant="ghost"
               onClick={() => handleNavigate('features')}
-              className="mb-6 gap-2"
+              className="mb-4 sm:mb-6 gap-1.5 sm:gap-2 text-sm"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Back to Features
             </Button>
             {renderContent()}

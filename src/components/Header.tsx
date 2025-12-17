@@ -37,17 +37,17 @@ export const Header = ({ onNavigate }: HeaderProps) => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <div 
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
             onClick={() => onNavigate?.('home')}
           >
-            <img src={visioncodeLogo} alt="VisionCode AI Logo" className="w-10 h-10 object-contain" />
+            <img src={visioncodeLogo} alt="VisionCode AI Logo" className="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
             <div>
-              <h1 className="font-bold text-lg leading-tight">VisionCode</h1>
-              <span className="text-xs text-primary font-medium">AI</span>
+              <h1 className="font-bold text-base sm:text-lg leading-tight">VisionCode</h1>
+              <span className="text-[10px] sm:text-xs text-primary font-medium">AI</span>
             </div>
           </div>
 
@@ -78,31 +78,31 @@ export const Header = ({ onNavigate }: HeaderProps) => {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-primary/20 text-primary text-sm">
+                  <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 sm:h-9 sm:w-9">
+                    <Avatar className="h-7 w-7 sm:h-8 sm:w-8">
+                      <AvatarFallback className="bg-primary/20 text-primary text-xs sm:text-sm">
                         {user.email?.charAt(0).toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent align="end" className="w-48 sm:w-56">
                   <div className="px-2 py-1.5">
-                    <p className="text-sm font-medium truncate">{user.email}</p>
-                    <p className="text-xs text-muted-foreground">Signed in</p>
+                    <p className="text-xs sm:text-sm font-medium truncate">{user.email}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">Signed in</p>
                   </div>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => onNavigate?.('history')}>
-                    <History className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={() => onNavigate?.('history')} className="text-xs sm:text-sm">
+                    <History className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     View History
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" />
+                  <DropdownMenuItem onClick={handleSignOut} className="text-destructive text-xs sm:text-sm">
+                    <LogOut className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -111,7 +111,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
               <Button 
                 variant="glow" 
                 size="sm" 
-                className="hidden sm:flex"
+                className="hidden sm:flex text-xs sm:text-sm h-8 sm:h-9"
                 onClick={() => navigate('/auth')}
               >
                 Sign In
@@ -122,10 +122,10 @@ export const Header = ({ onNavigate }: HeaderProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden h-8 w-8 sm:h-9 sm:w-9"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
             </Button>
           </div>
         </div>
@@ -134,7 +134,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
         <div
           className={cn(
             "md:hidden overflow-hidden transition-all duration-300",
-            mobileMenuOpen ? "max-h-80 pb-4" : "max-h-0"
+            mobileMenuOpen ? "max-h-96 pb-4" : "max-h-0"
           )}
         >
           <nav className="flex flex-col gap-1 pt-2">
@@ -146,7 +146,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
                   onNavigate?.(item.id);
                   setMobileMenuOpen(false);
                 }}
-                className="justify-start text-muted-foreground hover:text-foreground"
+                className="justify-start text-muted-foreground hover:text-foreground text-sm h-10"
               >
                 {item.label}
               </Button>
@@ -158,7 +158,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
                   onNavigate?.('history');
                   setMobileMenuOpen(false);
                 }}
-                className="justify-start text-muted-foreground hover:text-foreground gap-2"
+                className="justify-start text-muted-foreground hover:text-foreground gap-2 text-sm h-10"
               >
                 <History className="h-4 w-4" />
                 History
@@ -171,7 +171,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
                   handleSignOut();
                   setMobileMenuOpen(false);
                 }}
-                className="mt-2 text-destructive"
+                className="mt-2 text-destructive text-sm h-10"
               >
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign Out
@@ -183,7 +183,7 @@ export const Header = ({ onNavigate }: HeaderProps) => {
                   navigate('/auth');
                   setMobileMenuOpen(false);
                 }}
-                className="mt-2"
+                className="mt-2 text-sm h-10"
               >
                 Sign In
               </Button>

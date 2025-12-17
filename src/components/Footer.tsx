@@ -4,26 +4,26 @@ import visioncodeLogo from '@/assets/visioncode-logo.png';
 export const Footer = () => {
   return (
     <footer className="border-t border-border/50 bg-background/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <img src={visioncodeLogo} alt="VisionCode AI" className="w-10 h-10 object-contain" />
+          <div className="space-y-3 sm:space-y-4 col-span-2 sm:col-span-1">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <img src={visioncodeLogo} alt="VisionCode AI" className="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
               <div>
-                <h3 className="font-bold text-lg">VisionCode</h3>
+                <h3 className="font-bold text-base sm:text-lg">VisionCode</h3>
                 <span className="text-xs text-primary font-medium">AI</span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               AI-powered coding assistant for developers of all skill levels.
             </p>
           </div>
 
           {/* Features */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Features</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-semibold text-sm sm:text-base">Features</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
               <li>Code Analysis</li>
               <li>Code Generation</li>
               <li>Bug Detection</li>
@@ -32,9 +32,9 @@ export const Footer = () => {
           </div>
 
           {/* Legal */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Legal</h4>
-            <ul className="space-y-2 text-sm">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-semibold text-sm sm:text-base">Legal</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
               <li>
                 <Link to="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
                   Privacy Policy
@@ -49,9 +49,9 @@ export const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Support</h4>
-            <ul className="space-y-2 text-sm">
+          <div className="space-y-3 sm:space-y-4">
+            <h4 className="font-semibold text-sm sm:text-base">Support</h4>
+            <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
               <li>
                 <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact Us
@@ -63,7 +63,7 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:visioncode.help@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="mailto:visioncode.help@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors break-all">
                   visioncode.help@gmail.com
                 </a>
               </li>
@@ -71,7 +71,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border/50 text-center text-xs sm:text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} VisionCode AI. All rights reserved.</p>
         </div>
       </div>

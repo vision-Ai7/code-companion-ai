@@ -77,18 +77,18 @@ export const FeatureCard = ({ feature, onClick, delay = 0 }: FeatureCardProps) =
       style={{ animationDelay: `${delay}ms` }}
       onClick={() => onClick(feature.id)}
     >
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 p-4 sm:p-6">
         <div className={cn(
-          "w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110",
+          "w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3 transition-transform duration-300 group-hover:scale-110",
           `bg-gradient-to-br ${feature.gradient}`
         )}>
-          <div className="text-white">{feature.icon}</div>
+          <div className="text-white [&>svg]:h-5 [&>svg]:w-5 sm:[&>svg]:h-6 sm:[&>svg]:w-6">{feature.icon}</div>
         </div>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between text-base sm:text-lg">
           {feature.title}
           <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-primary" />
         </CardTitle>
-        <CardDescription>{feature.description}</CardDescription>
+        <CardDescription className="text-xs sm:text-sm">{feature.description}</CardDescription>
       </CardHeader>
     </Card>
   );
@@ -100,7 +100,7 @@ interface FeatureGridProps {
 
 export const FeatureGrid = ({ onFeatureSelect }: FeatureGridProps) => {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
       {features.map((feature, index) => (
         <FeatureCard
           key={feature.id}
