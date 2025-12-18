@@ -130,6 +130,51 @@ export type Database = {
         }
         Relationships: []
       }
+      subscriptions: {
+        Row: {
+          amount_paid: number
+          created_at: string
+          currency: string
+          expires_at: string
+          id: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_paid: number
+          created_at?: string
+          currency?: string
+          expires_at: string
+          id?: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_paid?: number
+          created_at?: string
+          currency?: string
+          expires_at?: string
+          id?: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -138,7 +183,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      subscription_plan: "monthly" | "yearly"
+      subscription_status: "active" | "expired" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -265,6 +311,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      subscription_plan: ["monthly", "yearly"],
+      subscription_status: ["active", "expired", "cancelled"],
+    },
   },
 } as const

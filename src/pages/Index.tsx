@@ -9,6 +9,7 @@ import { BugFixer } from '@/components/BugFixer';
 import { CodeGenerator } from '@/components/CodeGenerator';
 import { ChatInterface } from '@/components/ChatInterface';
 import { HistoryPanel } from '@/components/HistoryPanel';
+import { PremiumGate } from '@/components/PremiumGate';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -115,12 +116,18 @@ const Index = () => {
           />
         );
       case 'generate':
-        return <CodeGenerator onGenerate={handleGenerate} />;
+        return (
+          <PremiumGate featureName="AI Code Generator">
+            <CodeGenerator onGenerate={handleGenerate} />
+          </PremiumGate>
+        );
       case 'chat':
         return (
-          <Card variant="glass" className="overflow-hidden">
-            <ChatInterface onSendMessage={handleChat} />
-          </Card>
+          <PremiumGate featureName="AI Chatbot">
+            <Card variant="glass" className="overflow-hidden">
+              <ChatInterface onSendMessage={handleChat} />
+            </Card>
+          </PremiumGate>
         );
       case 'history':
         return <HistoryPanel />;

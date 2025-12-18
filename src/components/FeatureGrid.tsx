@@ -5,10 +5,12 @@ import {
   Sparkles, 
   Bug, 
   FileCode,
-  ChevronRight 
+  ChevronRight,
+  Crown
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 interface Feature {
   id: string;
@@ -16,6 +18,7 @@ interface Feature {
   description: string;
   icon: React.ReactNode;
   gradient: string;
+  isPremium?: boolean;
 }
 
 const features: Feature[] = [
@@ -53,6 +56,7 @@ const features: Feature[] = [
     description: 'Generate complete, working code from natural language',
     icon: <FileCode className="h-6 w-6" />,
     gradient: 'from-yellow-500 to-amber-500',
+    isPremium: true,
   },
   {
     id: 'chat',
@@ -60,6 +64,7 @@ const features: Feature[] = [
     description: 'Chat about coding doubts, frameworks, and best practices',
     icon: <MessageSquare className="h-6 w-6" />,
     gradient: 'from-indigo-500 to-violet-500',
+    isPremium: true,
   },
 ];
 
@@ -73,10 +78,16 @@ export const FeatureCard = ({ feature, onClick, delay = 0 }: FeatureCardProps) =
   return (
     <Card
       variant="feature"
-      className="group cursor-pointer animate-fade-in"
+      className="group cursor-pointer animate-fade-in relative"
       style={{ animationDelay: `${delay}ms` }}
       onClick={() => onClick(feature.id)}
     >
+      {feature.isPremium && (
+        <Badge className="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 gap-1">
+          <Crown className="h-3 w-3" />
+          Premium
+        </Badge>
+      )}
       <CardHeader className="pb-3 p-4 sm:p-6">
         <div className={cn(
           "w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3 transition-transform duration-300 group-hover:scale-110",
