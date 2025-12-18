@@ -124,20 +124,47 @@ const TermsOfService = () => {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">8. Termination</h2>
+            <h2 className="text-2xl font-semibold">8. Account and Billing</h2>
             <p className="text-muted-foreground">
-              We reserve the right to suspend or terminate your account and access to our services at our sole 
-              discretion, without prior notice, for conduct that we believe violates these Terms of Service, 
-              is harmful to other users, or is otherwise inappropriate.
+              VisionCode AI offers premium subscription plans to access exclusive features. By purchasing a subscription, you agree to the following terms:
             </p>
+            <h3 className="text-xl font-medium mt-4">8.1 Subscription Plans</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+              <li><strong>Monthly Plan:</strong> ₹299 per month, providing access to premium features for 30 days from the date of purchase</li>
+              <li><strong>Yearly Plan:</strong> ₹599 per year, providing access to premium features for 365 days from the date of purchase</li>
+            </ul>
+            <h3 className="text-xl font-medium mt-4">8.2 Payment Processing</h3>
             <p className="text-muted-foreground">
-              You may terminate your account at any time by contacting us. Upon termination, your right to 
-              use the service will immediately cease.
+              All payments are processed securely through Razorpay. By making a purchase, you agree to Razorpay&apos;s terms of service and privacy policy. You are responsible for providing accurate payment information.
+            </p>
+            <h3 className="text-xl font-medium mt-4">8.3 Non-Refundable Policy</h3>
+            <p className="text-muted-foreground font-medium text-foreground">
+              ALL SUBSCRIPTION PURCHASES ARE FINAL AND NON-REFUNDABLE. Once a subscription is purchased, it cannot be cancelled, and no refunds will be issued under any circumstances. By completing a purchase, you acknowledge and accept this no-refund policy.
+            </p>
+            <h3 className="text-xl font-medium mt-4">8.4 Subscription Expiry</h3>
+            <p className="text-muted-foreground">
+              Your subscription will automatically expire at the end of the subscription period. Premium features will be locked upon expiry. We will send reminder emails before your subscription expires to allow you to renew. There is no automatic renewal; you must manually purchase a new subscription to continue access.
+            </p>
+            <h3 className="text-xl font-medium mt-4">8.5 Account Responsibility</h3>
+            <p className="text-muted-foreground">
+              You are responsible for maintaining the confidentiality of your account credentials. Subscription benefits are non-transferable and may only be used by the account holder. Sharing account credentials or subscription access is strictly prohibited.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">9. Changes to Terms</h2>
+            <h2 className="text-2xl font-semibold">9. Termination</h2>
+            <p className="text-muted-foreground">
+              We reserve the right to suspend or terminate your account and access to our services at our sole 
+              discretion, without prior notice, for conduct that we believe violates these Terms of Service, 
+              is harmful to other users, or is otherwise inappropriate. In the event of termination due to violation of these terms, no refund will be provided for any remaining subscription period.
+            </p>
+            <p className="text-muted-foreground">
+              You may delete your account at any time through your account settings. However, deleting your account does not entitle you to a refund for any active subscription.
+            </p>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">10. Changes to Terms</h2>
             <p className="text-muted-foreground">
               We reserve the right to modify these Terms of Service at any time. We will notify users of any 
               material changes by posting the updated terms on this page and updating the &quot;Last Updated&quot; date. 
@@ -146,17 +173,17 @@ const TermsOfService = () => {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">10. Governing Law</h2>
+            <h2 className="text-2xl font-semibold">11. Governing Law</h2>
             <p className="text-muted-foreground">
-              These Terms of Service shall be governed by and construed in accordance with applicable laws, 
-              without regard to conflict of law principles.
+              These Terms of Service shall be governed by and construed in accordance with the laws of India. 
+              Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in India.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">11. Contact Information</h2>
+            <h2 className="text-2xl font-semibold">12. Contact Information</h2>
             <p className="text-muted-foreground">
-              If you have any questions about these Terms of Service, please contact us at:
+              If you have any questions about these Terms of Service or billing inquiries, please contact us at:
             </p>
             <p className="text-muted-foreground">
               Email:{' '}
