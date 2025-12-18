@@ -1,4 +1,4 @@
-import { Menu, X, User, LogOut, History } from 'lucide-react';
+import { Menu, X, User, LogOut, History, Crown } from 'lucide-react';
 import visioncodeLogo from '@/assets/visioncode-logo.png';
 import { Button } from '@/components/ui/button';
 import {
@@ -96,6 +96,10 @@ export const Header = ({ onNavigate }: HeaderProps) => {
                     <p className="text-[10px] sm:text-xs text-muted-foreground">Signed in</p>
                   </div>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate('/subscription')} className="text-xs sm:text-sm">
+                    <Crown className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    Subscription
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => onNavigate?.('history')} className="text-xs sm:text-sm">
                     <History className="mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     View History
@@ -152,17 +156,30 @@ export const Header = ({ onNavigate }: HeaderProps) => {
               </Button>
             ))}
             {user && (
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  onNavigate?.('history');
-                  setMobileMenuOpen(false);
-                }}
-                className="justify-start text-muted-foreground hover:text-foreground gap-2 text-sm h-10"
-              >
-                <History className="h-4 w-4" />
-                History
-              </Button>
+              <>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    navigate('/subscription');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="justify-start text-muted-foreground hover:text-foreground gap-2 text-sm h-10"
+                >
+                  <Crown className="h-4 w-4" />
+                  Subscription
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    onNavigate?.('history');
+                    setMobileMenuOpen(false);
+                  }}
+                  className="justify-start text-muted-foreground hover:text-foreground gap-2 text-sm h-10"
+                >
+                  <History className="h-4 w-4" />
+                  History
+                </Button>
+              </>
             )}
             {user ? (
               <Button
