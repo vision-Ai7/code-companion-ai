@@ -89,9 +89,9 @@ const ResetPassword = () => {
         description: 'Your password has been successfully reset.',
       });
       
-      // Redirect to home after a short delay
+      // Redirect to login after a short delay
       setTimeout(() => {
-        navigate('/');
+        navigate('/auth');
       }, 2000);
     }
   };
@@ -136,7 +136,7 @@ const ResetPassword = () => {
               </div>
               <h3 className="text-lg font-medium mb-2">Password Updated!</h3>
               <p className="text-muted-foreground text-sm">
-                Redirecting you to the home page...
+                Redirecting you to the login page...
               </p>
             </div>
           ) : (
