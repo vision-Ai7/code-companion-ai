@@ -246,14 +246,6 @@ const Auth = () => {
                   {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                   Login
                 </Button>
-                <div className="text-center">
-                  <Link 
-                    to="/forgot-password" 
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
               </form>
             </TabsContent>
 
