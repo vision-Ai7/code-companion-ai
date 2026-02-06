@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface CountryCode {
@@ -35,19 +36,23 @@ interface CountryCodeSelectorProps {
   disabled?: boolean;
 }
 
-export const CountryCodeSelector = ({ value, onChange, disabled }: CountryCodeSelectorProps) => {
-  return (
-    <Select value={value} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger className="w-[100px]">
-        <SelectValue placeholder="+91" />
-      </SelectTrigger>
-      <SelectContent>
-        {countryCodes.map((country) => (
-          <SelectItem key={country.code} value={country.dial_code}>
-            {country.dial_code} {country.code}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-};
+export const CountryCodeSelector = React.forwardRef<HTMLButtonElement, CountryCodeSelectorProps>(
+  ({ value, onChange, disabled }, ref) => {
+    return (
+      <Select value={value} onValueChange={onChange} disabled={disabled}>
+        <SelectTrigger ref={ref} className="w-[100px]">
+          <SelectValue placeholder="+91" />
+        </SelectTrigger>
+        <SelectContent>
+          {countryCodes.map((country) => (
+            <SelectItem key={country.code} value={country.dial_code}>
+              {country.dial_code} {country.code}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    );
+  }
+);
+
+CountryCodeSelector.displayName = 'CountryCodeSelector';
