@@ -1,13 +1,30 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Code2, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Code2, Mail, Lock, User, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { PhoneAuthForm } from '@/components/auth/PhoneAuthForm';
+import { toast } from '@/hooks/use-toast';
+import { z } from 'zod';
+
+const emailSchema = z.string().email('Please enter a valid email address');
+const passwordSchema = z.string().min(8, 'Password must be at least 8 characters');
 
 const Auth = () => {
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
+  const { user, loading, signIn, signUp } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+  const [showPassword, setShowPassword] = useState(false);
+  
+  // Form state
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
   // Redirect if already logged in
   useEffect(() => {
@@ -16,8 +33,78 @@ const Auth = () => {
     }
   }, [user, loading, navigate]);
 
-  const handleAuthSuccess = () => {
-    navigate('/');
+  const validateForm = () => {
+    const newErrors: { email?: string; password?: string } = {};
+    
+    const emailResult = emailSchema.safeParse(email);
+    if (!emailResult.success) {
+      newErrors.email = emailResult.error.errors[0].message;
+    }
+    
+    const passwordResult = passwordSchema.safeParse(password);
+    if (!passwordResult.success) {
+      newErrors.password = passwordResult.error.errors[0].message;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    const { error } = await signIn(email, password);
+    setIsSubmitting(false);
+    
+    if (error) {
+      toast({
+        title: 'Login failed',
+        description: error.message === 'Invalid login credentials' 
+          ? 'Invalid email or password. Please try again.'
+          : error.message,
+        variant: 'destructive',
+      });
+    } else {
+      toast({ title: 'Welcome back!', description: 'You have been logged in successfully.' });
+      navigate('/');
+    }
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    const { error } = await signUp(email, password, displayName);
+    setIsSubmitting(false);
+    
+    if (error) {
+      if (error.message.includes('already registered')) {
+        toast({
+          title: 'Account exists',
+          description: 'An account with this email already exists. Please log in instead.',
+          variant: 'destructive',
+        });
+        setActiveTab('login');
+      } else {
+        toast({
+          title: 'Signup failed',
+          description: error.message,
+          variant: 'destructive',
+        });
+      }
+    } else {
+      toast({ 
+        title: 'Account created!', 
+        description: 'Please check your email to verify your account before signing in.',
+      });
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   if (loading) {
@@ -45,11 +132,139 @@ const Auth = () => {
           </div>
           <CardTitle className="text-2xl">Welcome to VisionCode AI</CardTitle>
           <CardDescription>
-            Sign in with your phone number to continue
+            Sign in to save your code analysis history
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <PhoneAuthForm onSuccess={handleAuthSuccess} />
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'signup')}>
+            <TabsList className="w-full mb-6">
+              <TabsTrigger value="login" className="flex-1">Login</TabsTrigger>
+              <TabsTrigger value="signup" className="flex-1">Sign Up</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="login">
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="login-email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="login-email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="login-password">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="login-password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                  {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+                </div>
+                <div className="flex justify-end">
+                  <Link 
+                    to="/forgot-password" 
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                  Login
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="signup">
+              <form onSubmit={handleSignup} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="signup-name">Display Name (optional)</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="signup-name"
+                      type="text"
+                      placeholder="John Doe"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-password">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="signup-password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                  {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+                  <p className="text-xs text-muted-foreground">Must be at least 8 characters</p>
+                </div>
+                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                  Create Account
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>
