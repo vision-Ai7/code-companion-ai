@@ -30,7 +30,7 @@ const ForgotPassword = () => {
     setIsSubmitting(true);
     
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: 'https://code-companion-ai-xi.vercel.app/reset-password',
     });
     
     setIsSubmitting(false);
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
       setIsSuccess(true);
       toast({ 
         title: 'Email sent!', 
-        description: 'Check your inbox for the password reset link.',
+        description: 'Password reset link has been sent to your email',
       });
     }
   };
