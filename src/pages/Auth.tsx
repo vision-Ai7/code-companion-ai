@@ -55,16 +55,22 @@ const Auth = () => {
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
     try {
-      const { error } = await lovable.auth.signInWithOAuth("google", {
+      const result = await lovable.auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin,
       });
       
-      if (error) {
+      // If redirected, the page will navigate away - no need to handle further
+      if (result.redirected) {
+        return;
+      }
+      
+      if (result.error) {
         toast({
           title: 'Google sign-in failed',
-          description: error.message,
+          description: result.error.message || 'An unexpected error occurred. Please try again.',
           variant: 'destructive',
         });
+        setIsGoogleLoading(false);
       }
     } catch (err) {
       toast({
@@ -72,7 +78,6 @@ const Auth = () => {
         description: 'An unexpected error occurred. Please try again.',
         variant: 'destructive',
       });
-    } finally {
       setIsGoogleLoading(false);
     }
   };
@@ -122,6 +127,7 @@ const Auth = () => {
           variant: 'destructive',
         });
       }
+    } else {
       toast({ 
         title: 'Account created!', 
         description: 'Please check your email to verify your account before signing in.',
