@@ -10,6 +10,7 @@ import { CodeGenerator } from '@/components/CodeGenerator';
 import { ChatInterface } from '@/components/ChatInterface';
 import { HistoryPanel } from '@/components/HistoryPanel';
 import { PremiumGate } from '@/components/PremiumGate';
+import { AuthGate } from '@/components/AuthGate';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -25,7 +26,7 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<ActiveSection>('home');
   const contentRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
-  const { saveAnalysis, createConversation, saveMessage } = useHistory();
+  const { saveAnalysis } = useHistory();
 
   const handleNavigate = (section: string) => {
     setActiveSection(section as ActiveSection);
@@ -96,41 +97,55 @@ const Index = () => {
     switch (activeSection) {
       case 'analyze':
         return (
-          <CodeAnalyzer
-            onAnalyze={handleAnalyze}
-            onExtractCode={extractCodeFromImage}
-          />
+          <AuthGate featureName="Code Analyzer">
+            <CodeAnalyzer
+              onAnalyze={handleAnalyze}
+              onExtractCode={extractCodeFromImage}
+            />
+          </AuthGate>
         );
       case 'explain':
         return (
-          <CodeExplainer
-            onExplain={handleExplain}
-            onExtractCode={extractCodeFromImage}
-          />
+          <AuthGate featureName="Code Explainer">
+            <CodeExplainer
+              onExplain={handleExplain}
+              onExtractCode={extractCodeFromImage}
+            />
+          </AuthGate>
         );
       case 'bugs':
         return (
-          <BugFixer
-            onFix={handleFix}
-            onExtractCode={extractCodeFromImage}
-          />
+          <AuthGate featureName="Bug Detector">
+            <BugFixer
+              onFix={handleFix}
+              onExtractCode={extractCodeFromImage}
+            />
+          </AuthGate>
         );
       case 'generate':
         return (
-          <PremiumGate featureName="AI Code Generator">
-            <CodeGenerator onGenerate={handleGenerate} />
-          </PremiumGate>
+          <AuthGate featureName="Code Generator">
+            <PremiumGate featureName="AI Code Generator">
+              <CodeGenerator onGenerate={handleGenerate} />
+            </PremiumGate>
+          </AuthGate>
         );
       case 'chat':
         return (
-          <PremiumGate featureName="AI Chatbot">
-            <Card variant="glass" className="overflow-hidden">
-              <ChatInterface onSendMessage={handleChat} />
-            </Card>
-          </PremiumGate>
+          <AuthGate featureName="AI Chatbot">
+            <PremiumGate featureName="AI Chatbot">
+              <Card variant="glass" className="overflow-hidden">
+                <ChatInterface onSendMessage={handleChat} />
+              </Card>
+            </PremiumGate>
+          </AuthGate>
         );
       case 'history':
-        return <HistoryPanel />;
+        return (
+          <AuthGate featureName="History">
+            <HistoryPanel />
+          </AuthGate>
+        );
       default:
         return null;
     }
