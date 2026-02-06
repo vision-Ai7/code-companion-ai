@@ -1,4 +1,4 @@
-import { Menu, X, User, LogOut, History, Crown } from 'lucide-react';
+import { Menu, X, LogOut, History, Crown } from 'lucide-react';
 import visioncodeLogo from '@/assets/visioncode-logo.png';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
+import { useSubscription } from '@/hooks/useSubscription';
 
 interface HeaderProps {
   onNavigate?: (section: string) => void;
@@ -21,6 +22,7 @@ interface HeaderProps {
 export const Header = ({ onNavigate }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
+  const { isPremium } = useSubscription();
   const navigate = useNavigate();
 
   const navItems = [
@@ -82,12 +84,22 @@ export const Header = ({ onNavigate }: HeaderProps) => {
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 sm:h-9 sm:w-9">
+                  <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 sm:h-9 sm:w-9 relative">
                     <Avatar className="h-7 w-7 sm:h-8 sm:w-8">
-                      <AvatarFallback className="bg-primary/20 text-primary text-xs sm:text-sm">
+                      <AvatarFallback className={cn(
+                        "text-xs sm:text-sm",
+                        isPremium 
+                          ? "bg-gradient-to-br from-amber-400 to-orange-500 text-white" 
+                          : "bg-primary/20 text-primary"
+                      )}>
                         {user.email?.charAt(0).toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
+                    {isPremium && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center ring-2 ring-background">
+                        <Crown className="h-2.5 w-2.5 text-white" />
+                      </div>
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48 sm:w-56">
