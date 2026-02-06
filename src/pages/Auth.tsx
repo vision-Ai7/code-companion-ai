@@ -94,9 +94,10 @@ const Auth = () => {
           variant: 'destructive',
         });
       }
-    } else {
-      toast({ title: 'Account created!', description: 'Welcome to VisionCode AI.' });
-      navigate('/');
+      toast({ 
+        title: 'Account created!', 
+        description: 'Please check your email to verify your account before signing in.',
+      });
     }
   };
 
@@ -227,12 +228,6 @@ const Auth = () => {
               </form>
             </TabsContent>
           </Tabs>
-
-          <div className="mt-6 text-center">
-            <Button variant="ghost" onClick={() => navigate('/')} className="text-muted-foreground">
-              Continue without account
-            </Button>
-          </div>
         </CardContent>
       </Card>
     </div>
