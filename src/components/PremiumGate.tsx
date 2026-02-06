@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Lock, Crown, Check, Sparkles } from 'lucide-react';
+import { Lock, Crown, Check, Sparkles, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { useSubscription } from '@/hooks/useSubscription';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 interface PremiumGateProps {
   children: React.ReactNode;
@@ -23,6 +26,7 @@ export const PremiumGate = ({ children, featureName }: PremiumGateProps) => {
   const { user } = useAuth();
   const [processingPayment, setProcessingPayment] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly' | null>(null);
+  const [agreedToPolicy, setAgreedToPolicy] = useState(false);
 
   const loadRazorpayScript = (): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -41,6 +45,11 @@ export const PremiumGate = ({ children, featureName }: PremiumGateProps) => {
   const handleSubscribe = async (plan: 'monthly' | 'yearly') => {
     if (!user) {
       toast.error('Please login to subscribe');
+      return;
+    }
+
+    if (!agreedToPolicy) {
+      toast.error('Please agree to the non-refundable policy to continue');
       return;
     }
 
@@ -243,6 +252,34 @@ export const PremiumGate = ({ children, featureName }: PremiumGateProps) => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Non-refundable policy checkbox */}
+      {user && (
+        <div className="mt-8 w-full max-w-2xl">
+          <div className="flex items-start space-x-3 p-4 rounded-lg border border-amber-500/30 bg-amber-500/5">
+            <Checkbox 
+              id="refund-policy" 
+              checked={agreedToPolicy}
+              onCheckedChange={(checked) => setAgreedToPolicy(checked === true)}
+              className="mt-0.5"
+            />
+            <div className="space-y-1">
+              <Label 
+                htmlFor="refund-policy" 
+                className="text-sm font-medium leading-none cursor-pointer flex items-center gap-2"
+              >
+                <AlertTriangle className="w-4 h-4 text-amber-500" />
+                I understand and agree to the non-refundable policy
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                All subscription purchases are final and non-refundable. By checking this box, you acknowledge that you have read and agree to our{' '}
+                <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>, 
+                including the billing and refund policy.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!user && (
         <p className="mt-6 text-sm text-muted-foreground">
